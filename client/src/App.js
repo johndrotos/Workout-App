@@ -18,12 +18,12 @@ function App() {
 
   const createWorkout = () => {
     Axios.post("http://localhost:3001/createWorkout", {
-      exercise: "",
-      sets: 0,
-      reps: 0,
-      weight: 0
+      exercise,
+      sets,
+      reps,
+      weight,
     }).then((response) =>{
-      alert("Workout Created");
+      setListOfWorkouts([...listOfWorkouts, {exercise, sets, reps, weight}]);
     });
   };
 
@@ -31,23 +31,50 @@ function App() {
 
   return (
     <div className="App">
+      <header className="header">
+        John's Workout Log
+      </header>
       <div className="workoutsDisplay">
         {listOfWorkouts.map((workout) => {
           return(
-            <div>
-              <h1>Exercise: {workout.exercise}</h1>
-              <h1>Sets: {workout.sets}</h1>
-              <h1>Reps: {workout.reps}</h1>
-              <h1>Weight: {workout.weight}</h1>
+            <div className="workoutItem">
+              <div className="workoutData">Exercise: {workout.exercise}</div>
+              <div className="workoutData">Sets: {workout.sets}</div>
+              <div className="workoutData">Reps: {workout.reps}</div>
+              <div className="workoutData">Weight: {workout.weight}</div>
             </div>
           );
         })}
       </div>
       <div>
-        <input type="text" placeholder="Exercise" />
-        <input type="number" placeholder="Sets" />
-        <input type="number" placeholder="Reps" />
-        <input type="number" placeholder="Weight" />
+        <input 
+          type="text" 
+          placeholder="Exercise" 
+          onChange={(event) => {
+            setExercise(event.target.value);
+          }}
+        />
+        <input 
+          type="number" 
+          placeholder="Sets" 
+          onChange={(event) => {
+            setSets(event.target.value);
+          }}
+        />
+        <input 
+          type="number" 
+          placeholder="Reps" 
+          onChange={(event) => {
+            setReps(event.target.value);
+          }}
+        />
+        <input 
+          type="number" 
+          placeholder="Weight" 
+          onChange={(event) => {
+            setWeight(event.target.value);
+          }}
+        />
         <button onClick={createWorkout}>Submit</button>
       </div>
     </div>
